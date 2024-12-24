@@ -1,160 +1,121 @@
-﻿using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-
-class Program
+﻿class Program 
 {
-    static void Main(string[] args)
+    static void Main(string[] args) 
     {
         Console.WriteLine(" --------------------- \nWelcome to the gladiator trials!\n-----------------------");
-        Console.WriteLine("Please choose a class !");
-        Character player = characterSelection();
-        Console.WriteLine("Time to BATTLE !");
-        Enemy enemy = new Enemy();
-        battle(player, enemy);
+        Console.WriteLine("Please choose a class!");
+        Character player = CharacterSelection();
+        Console.WriteLine("Time to Battle!");
+        Character enemy = new Character("Tyler1");
+        Battle(player, enemy);
         Console.ReadKey();
     }
-    static Character characterSelection()
+    
+    static Character CharacterSelection() 
     {
-        string name = " ";
-        int characterChoice = 0;
+        string name = "";
+        int choice = 0;
         Character player = null;
-        try
+        try 
         {
             Console.WriteLine("PRESS 1 FOR WARRIOR CLASS\nPRESS 2 FOR MAGE CLASS\n...");
-            characterChoice = Convert.ToInt32(Console.ReadLine());
+            choice = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Awesome! Now choose a name for your gladiator!");
             name = Console.ReadLine();
-
+            if (name == "")
+            {
+                name = "Dumbass";
+            }
         }
-        catch (FormatException)
+        catch (FormatException) 
         {
             Console.WriteLine("Wrong input, try again!");
         }
 
-        if (characterChoice == 1)
+        switch (choice)
         {
-            Console.WriteLine($"From here on out you are {name} the mighty warrior!");
-            player = new Mage();
+            case 1: 
+                return new Warrior(name);
+            case 2:
+                return new Mage(name);   
+            default:
+                return new Idiot(name);                
         }
-        else if (characterChoice == 2)
-        {
-            Console.WriteLine($"From here on out you are {name} the cunning mage!");
-            player = new Warrior();
-        }
-
-        return player;
     }
-    static void battle(Character player, Character enemy)
+    static void Battle(Character player, Character enemy) 
     {
         Random random = new Random();
-        bool playerAlive = true;
-        bool enemyAlive = true;
-        int playerDamage;
-        int enemyDamage;
-        Console.WriteLine("You are now fighting the mighty GOBLIN!");
+        Console.WriteLine($"{player.name} is fighting {enemy.name}!");
 
-        while(playerAlive && enemyAlive)
+        while(player.IsAlive() && enemy.IsAlive()) 
         {
-            playerDamage = random.Next(1, 6);
-            enemyDamage = random.Next(1, 6);
             Console.WriteLine("Rolling the dice for player damage!");
             Console.ReadKey();
-            player.dealDamage(enemy, playerDamage);
+            player.DealDamage(enemy, random.Next(1, 6));
+            if (!enemy.IsAlive()) 
+            {
+                Console.WriteLine($"{enemy.name} has DIED! You are victorious!");
+                return;
+            }
             Console.WriteLine("Rolling the dice for enemy damage!");
             Console.ReadKey();
-            enemy.dealDamage(player, enemyDamage);
+            enemy.DealDamage(player, random.Next(1, 6));
+            if (!player.IsAlive()) 
+            {
+                Console.WriteLine($"{player.name} has DIED! You lost!");
+                return;
+            }
             Console.ReadKey();
-            playerAlive = player.isAlive();
-            enemyAlive = enemy.isAlive();
         }
-
-        if (playerAlive == false)
-        {
-            Console.WriteLine("The player has DIED! You lost!");
-        }
-        else if (enemyAlive == false)
-        {
-            Console.WriteLine("You defeated the enemy! You are victorious!");
-        }
-
-        Console.ReadKey();
-  
     }
-
 }
 
-public class Character
+public class Character 
 {
-    public bool alive;
-    public int playerHp = 20;
-    public int enemyHp = 20;
-    string name = " ";
-    public virtual void takeDamage(Character x)
-    {
+    int hp = 20;
+    public string name = "";
 
-    }
-    public virtual void dealDamage(Character x, int dmg)
+    public Character(string name)
     {
+        this.name = name;
+    }
+    public void DealDamage(Character defender, int damage) 
+    {
+        defender.setHp(defender.hp - damage);
+        Console.WriteLine($"{name} has dealt {damage} damage to {defender.name}! {defender.name} has {defender.hp} hp left!");
+    }
 
-    }
-    public virtual bool isAlive()
+    public void setHp(int hp)
     {
-        return playerHp > 0;  // The player is alive if playerHp > 0
+        this.hp = hp;
+    }
+    public bool IsAlive() 
+    {
+        return hp > 0; 
     }
 }
+
 class Mage : Character
 {
-    public override void dealDamage(Character x, int dmg)
+    public Mage(string name) : base(name)
     {
-        Console.WriteLine($"The player dealt {dmg} to enemy!");
-        enemyHp -= dmg;
-
-        Console.WriteLine($"Enemy has {enemyHp} hp left!");
-
-        if (x.enemyHp <= 0)
-        {
-            x.alive = false; // Mark the enemy as dead if their HP is <= 0
-        }
-    }
-    public override bool isAlive()
-    {
-        return playerHp > 0; // Check if player is still alive
+        Console.WriteLine($"From here on out you are {name} the cunning mage!");
+        this.name = name;
     }
 }
 class Warrior : Character
 {
-    public override void dealDamage(Character x, int dmg)
+    public Warrior(string name) : base(name)
     {
-        Console.WriteLine($"The player dealt {dmg} to enemy!");
-        enemyHp -= dmg;
-        Console.WriteLine($"Enemy has {enemyHp} hp left!");
-
-        if (x.enemyHp <= 0)
-        {
-            x.alive = false; // Mark the enemy as dead if their HP is <= 0
-        }
-    }
-    public override bool isAlive()
-    {
-        return playerHp > 0; // Check if player is still alive
+        Console.WriteLine($"From here on out you are {name} the mighty warrior!");
+        this.name = name;
     }
 }
-
-public class Enemy : Character
+class Idiot : Character
 {
-    public override void dealDamage(Character x, int dmg)
+    public Idiot(string name) : base(name)
     {
-        Console.WriteLine($"The enemy dealt {dmg} to player!");
-        playerHp -= dmg;
-        Console.WriteLine($"Player has {playerHp} hp left!");
-
-        if (x.playerHp <= 0)
-        {
-            x.alive = false; // Mark the enemy as dead if their HP is <= 0
-        }
-    }
-    public override bool isAlive()
-    {
-        return enemyHp > 0; // Check if enemy is still alive
+        Console.WriteLine($"You selected an invalid class, so from here on out you are {name} the idiot!");
+        this.name = name;
     }
 }
