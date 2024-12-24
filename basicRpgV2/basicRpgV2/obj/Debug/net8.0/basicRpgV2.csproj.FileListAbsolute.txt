@@ -1,0 +1,15 @@
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\bin\Debug\net8.0\basicRpgV2.exe
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\bin\Debug\net8.0\basicRpgV2.deps.json
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\bin\Debug\net8.0\basicRpgV2.runtimeconfig.json
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\bin\Debug\net8.0\basicRpgV2.dll
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\bin\Debug\net8.0\basicRpgV2.pdb
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\obj\Debug\net8.0\basicRpgV2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\obj\Debug\net8.0\basicRpgV2.AssemblyInfoInputs.cache
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\obj\Debug\net8.0\basicRpgV2.AssemblyInfo.cs
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\obj\Debug\net8.0\basicRpgV2.csproj.CoreCompileInputs.cache
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\obj\Debug\net8.0\basicRpgV2.dll
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\obj\Debug\net8.0\refint\basicRpgV2.dll
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\obj\Debug\net8.0\basicRpgV2.pdb
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\obj\Debug\net8.0\basicRpgV2.genruntimeconfig.cache
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\obj\Debug\net8.0\ref\basicRpgV2.dll
+C:\Users\leone\source\repos\basicRpgV2\basicRpgV2\obj\Debug\net8.0\basicRpgV2.sourcelink.json
