@@ -1,0 +1,14 @@
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\bin\Debug\net8.0\BasicRPG.exe
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\bin\Debug\net8.0\BasicRPG.deps.json
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\bin\Debug\net8.0\BasicRPG.runtimeconfig.json
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\bin\Debug\net8.0\BasicRPG.dll
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\bin\Debug\net8.0\BasicRPG.pdb
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\obj\Debug\net8.0\BasicRPG.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\obj\Debug\net8.0\BasicRPG.AssemblyInfoInputs.cache
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\obj\Debug\net8.0\BasicRPG.AssemblyInfo.cs
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\obj\Debug\net8.0\BasicRPG.csproj.CoreCompileInputs.cache
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\obj\Debug\net8.0\BasicRPG.dll
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\obj\Debug\net8.0\refint\BasicRPG.dll
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\obj\Debug\net8.0\BasicRPG.pdb
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\obj\Debug\net8.0\BasicRPG.genruntimeconfig.cache
+C:\Users\leone\source\repos\BasicRPG\BasicRPG\obj\Debug\net8.0\ref\BasicRPG.dll
