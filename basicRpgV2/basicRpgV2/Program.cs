@@ -4,16 +4,15 @@ class Program
 {
     static void Main(string[] args)
     {
-        string characterName;
+        string characterName = " ";
         int classChoice = 0;
-        Character character;
+        Character character = null;
+        Character enemy = new Character("Goblin", 20);
 
         Console.WriteLine("------------------\nWelcome to the Basic RPG game!\n------------------");
         Console.WriteLine("Let's start of by choosing a class shall we!\n------------------");
         Console.WriteLine("Type 1 for the Mighty Warrior class! \nType 2 for the Cunning Cleric class!\nType 3 for the Rapid Ranger class!");
         classChoice = Convert.ToInt32(Console.ReadLine());
-
-
 
         switch (classChoice)
         {
@@ -22,7 +21,7 @@ class Program
                 Console.WriteLine("What should we call you, hero?");
                 characterName = Console.ReadLine();
                 Console.WriteLine($"{characterName}... truly a name fit for a hero.");
-                character = new MightyWarrior(characterName, 25);
+                character = new Character(characterName, 25);
 
                 break;
             case 2:
@@ -30,80 +29,99 @@ class Program
                 Console.WriteLine("What should we call you, hero?");
                 characterName = Console.ReadLine();
                 Console.WriteLine($"{characterName}... truly a name fit for a hero.");
-                character = new CunningCleric(characterName, 20);
+                character = new Character(characterName, 20);
                 break;
             case 3:
                 Console.WriteLine("So you have chosen the Rapid Ranger. Your journey begins now adventurer!");
                 Console.WriteLine("What should we call you, hero?");
                 characterName = Console.ReadLine();
                 Console.WriteLine($"{characterName}... truly a name fit for a hero.");
-                character = new RapidRanger(characterName, 15);
+                character = new Character(characterName, 15);
                 break;
-            case (> 3):
+            default:
                 Console.WriteLine("Wrong input.");
                 break;
         }
 
-
-
+        Console.WriteLine($"{characterName}. It is time for your first battle. May you be victorious...");
+        battle(character, enemy);
         Console.ReadKey();
     }
-}
-public class Character
-{
-    private string name;
-    private int health;
-    private bool isAlive;
 
-    public Character(string name, int health)
+    static void battle(Character player, Character enemy)
     {
 
-    }
-    public void dealDamage(int damage)
-    {
-    
-    }
-    public void receiveDamage(Character character)
-    {
+        Random dmgnumber = new Random();
+        int damage;
+        int remPlayerHp;
+        int remEnemyHp;
 
+        while (player.isAlive() && enemy.isAlive())
+        {
+            damage = dmgnumber.Next(1, 6);
+            remEnemyHp = enemy.takeDamage(damage);
+            Console.WriteLine("Rolling for hero damage...");
+            Console.WriteLine($"Hero did {damage} to the enemy!\nRemaining hp: {remEnemyHp}");
+
+            damage = dmgnumber.Next(1, 6);
+            remPlayerHp = player.takeDamage(damage);
+            Console.WriteLine("Rolling for player damage...");
+            Console.WriteLine($"Enemy did {damage} to the hero!\nRemaining hp: {remPlayerHp}");
+            Console.ReadKey();
+
+        }
     }
-    public bool isDead()
+    public class Character
     {
-        return isAlive;
-    }
-}
+        private string name;
+        private int health;
 
-class MightyWarrior : Character
-{
-    public MightyWarrior(string name, int health) : base(name, health)
+        public Character(string name, int health)
+        {
+            this.health = health;
+            this.name = name;
+        }
+        public int takeDamage(int damage)
+        {
+            health -= damage;
+
+            if(health <= 0)
+            {
+                health = 0;
+            }
+
+            return health;
+        }
+        public bool isAlive()
+        {
+            if(health <= 0)
+            {
+                Console.WriteLine($"{name} has died!");
+            }
+            return health > 0;
+        }
+    }
+
+    class MightyWarrior : Character
     {
+        public MightyWarrior(string name, int health) : base(name, health)
+        {
 
+        }
     }
-    public void dealDamage()
-    { 
-    
-    }
-}
 
-class CunningCleric : Character
-{
-    public CunningCleric(string name, int health) : base(name, health)
+    class CunningCleric : Character
     {
+        public CunningCleric(string name, int health) : base(name, health)
+        {
 
+        }
     }
-    public void dealDamage()
-    { 
-    
-    }
-}
-class RapidRanger : Character
-{
-    public RapidRanger(string name, int health) : base(name, health)
+    class RapidRanger : Character
     {
+        public RapidRanger(string name, int health) : base(name, health)
+        {
 
-    }
-    public void dealDamage()
-    { 
-    
+        }
     }
 }
