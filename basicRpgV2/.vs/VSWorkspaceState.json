@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\basicRpgV2"
   ],
-  "SelectedNode": "\\basicRpgV2.sln",
+  "SelectedNode": "\\basicRpgV2\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -1,127 +1,109 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Xml.Linq;
 
 class Program
 {
     static void Main(string[] args)
     {
-        string characterName = " ";
-        int classChoice = 0;
-        Character character = null;
+        string playerChoice;
+        Character player = new Character("Leon", 20);
         Character enemy = new Character("Goblin", 20);
+        Console.WriteLine("Please choose your class. : type Warrior");
+        playerChoice = Console.ReadLine();
+        playerChoice.ToLower();
 
-        Console.WriteLine("------------------\nWelcome to the Basic RPG game!\n------------------");
-        Console.WriteLine("Let's start of by choosing a class shall we!\n------------------");
-        Console.WriteLine("Type 1 for the Mighty Warrior class! \nType 2 for the Cunning Cleric class!\nType 3 for the Rapid Ranger class!");
-        classChoice = Convert.ToInt32(Console.ReadLine());
-
-        switch (classChoice)
+        //create warrior class
+        if(playerChoice == "warrior")
         {
-            case 1:
-                Console.WriteLine("So you have chosen the Mighy Warrior. Your journey begins now adventurer!");
-                Console.WriteLine("What should we call you, hero?");
-                characterName = Console.ReadLine();
-                Console.WriteLine($"{characterName}... truly a name fit for a hero.");
-                character = new Character(characterName, 25);
-
-                break;
-            case 2:
-                Console.WriteLine("So you have chosen the Cunning Cleric. Your journey begins now adventurer!");
-                Console.WriteLine("What should we call you, hero?");
-                characterName = Console.ReadLine();
-                Console.WriteLine($"{characterName}... truly a name fit for a hero.");
-                character = new Character(characterName, 20);
-                break;
-            case 3:
-                Console.WriteLine("So you have chosen the Rapid Ranger. Your journey begins now adventurer!");
-                Console.WriteLine("What should we call you, hero?");
-                characterName = Console.ReadLine();
-                Console.WriteLine($"{characterName}... truly a name fit for a hero.");
-                character = new Character(characterName, 15);
-                break;
-            default:
-                Console.WriteLine("Wrong input.");
-                break;
+            player = new Warrior("Leon", 25);
         }
 
-        Console.WriteLine($"{characterName}. It is time for your first battle. May you be victorious...");
-        battle(character, enemy);
-        Console.ReadKey();
-    }
-
-    static void battle(Character player, Character enemy)
-    {
-
-        Random dmgnumber = new Random();
-        int damage;
-        int remPlayerHp;
-        int remEnemyHp;
-
+        //time to fight
         while (player.isAlive() && enemy.isAlive())
         {
-            damage = dmgnumber.Next(1, 6);
-            remEnemyHp = enemy.takeDamage(damage);
-            Console.WriteLine("Rolling for hero damage...");
-            Console.WriteLine($"Hero did {damage} to the enemy!\nRemaining hp: {remEnemyHp}");
+            //attack chooses which ability to use
+            player.attack(enemy);
+            enemy.attack(player);
+        }
+    }
+}
+public class Character
+{
+    Random random = new Random();
+    int damage;
+    private string name;
+    private int health;
+    private bool alive;
+    public Character(string name, int health)
+    {
+        this.name = name;
+        this.health = health;
+    }
+    public virtual void attack(Character enemy)
+    {
+        dealDamage(enemy, 1);
+    }
+    public void dealDamage(Character c, int ability)
+    {
+        //rolls damage based on ability used
+        switch (ability)
+        {
+            case 1:
+                damage = random.Next(1, 4);
+                Console.WriteLine($"{name} used Basic Attack! It dealt {damage} damage!");
+                break;
+            case 2:
+                damage = random.Next(3, 6);
+                Console.WriteLine($"{name} used Basic Attack! It dealt {damage} damage!");
+                break;
+        }
 
-            damage = dmgnumber.Next(1, 6);
-            remPlayerHp = player.takeDamage(damage);
-            Console.WriteLine("Rolling for player damage...");
-            Console.WriteLine($"Enemy did {damage} to the hero!\nRemaining hp: {remPlayerHp}");
+        //Sends rolled damage to subtract enemy HP
+        c.takeDamage(c, damage);
+        Console.WriteLine($"{name} hit {c.name} for {damage} damage!");
+    }
+    public void takeDamage(Character target, int damage)
+    {
+        //Subtracts enemy hp based on damage received
+        health -= damage;
+        Console.WriteLine($"{name} has: " + health + " health left!");
+        //checks whether target still alive 
+        target.isAlive();
+    }
+    public bool isAlive()
+    {
+        if (health >= 1)
+        {
+            alive = true;
+        }
+        else
+        {
+            health = 0;
+            alive = false;
+            Console.WriteLine($"{name} has died!");
             Console.ReadKey();
-
         }
+        return alive;
     }
-    public class Character
+}
+public class Warrior : Character
+{
+    Random random = new Random();
+    int attackChoice;
+    int damage;
+    string name;
+    private string ab1 = "Basic attack; 1 - 3 dmg; 0 turn cd";
+    private string ab2 = "Charged attack; 3 - 5 dmg; 2 turn cd";
+    public Warrior(string name, int health) : base(name, health)
     {
-        private string name;
-        private int health;
-
-        public Character(string name, int health)
-        {
-            this.health = health;
-            this.name = name;
-        }
-        public int takeDamage(int damage)
-        {
-            health -= damage;
-
-            if(health <= 0)
-            {
-                health = 0;
-            }
-
-            return health;
-        }
-        public bool isAlive()
-        {
-            if(health <= 0)
-            {
-                Console.WriteLine($"{name} has died!");
-            }
-            return health > 0;
-        }
+        this.name = name;
     }
-
-    class MightyWarrior : Character
+    public override void attack(Character enemy)
     {
-        public MightyWarrior(string name, int health) : base(name, health)
-        {
+        //decides between using skill 1 or skill 2 
+        attackChoice = Convert.ToInt32(Console.ReadLine());
 
-        }
-    }
-
-    class CunningCleric : Character
-    {
-        public CunningCleric(string name, int health) : base(name, health)
-        {
-
-        }
-    }
-    class RapidRanger : Character
-    {
-        public RapidRanger(string name, int health) : base(name, health)
-        {
-
-        }
+        //calls dealdamage to roll for damage on enemy
+        enemy.dealDamage(enemy, attackChoice);
     }
 }
